@@ -19,23 +19,30 @@ func main() {
 
 	switch option {
 	case "1":
-		for index, capacity := range plantCapacities {
-			fmt.Printf("Plant %d capacity: %.0f\n", index, capacity)
-		}
-
+		generatePlantPowerReport(plantCapacities...)
 	case "2":
-		capacity := 0.
-		for _, plantId := range activePlants {
-			capacity += plantCapacities[plantId]
-		}
-
-		utilization := gridLoad / capacity
-		fmt.Printf("%-20s%.0f\n", "Capacity:", capacity)
-		fmt.Printf("%-20s%.0f\n", "Load:", gridLoad)
-		fmt.Printf("%-20s%.1f%%\n", "Utilization:", utilization*100)
-
+		generateGridPowerReport(activePlants, plantCapacities, gridLoad)
 	default:
 		fmt.Println("Unsupported option.")
 	}
+
+}
+
+func generatePlantPowerReport(plantCapacities ...float64) {
+	for index, capacity := range plantCapacities {
+		fmt.Printf("Plant %d capacity: %.0f\n", index, capacity)
+	}
+}
+
+func generateGridPowerReport(activePlants []int, plantCapacities []float64, gridLoad float64) {
+	capacity := 0.
+	for _, plantId := range activePlants {
+		capacity += plantCapacities[plantId]
+	}
+
+	utilization := gridLoad / capacity
+	fmt.Printf("%-20s%.0f\n", "Capacity:", capacity)
+	fmt.Printf("%-20s%.0f\n", "Load:", gridLoad)
+	fmt.Printf("%-20s%.1f%%\n", "Utilization:", utilization*100)
 
 }
